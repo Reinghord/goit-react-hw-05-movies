@@ -1,16 +1,19 @@
+import { Routes, Route } from 'react-router-dom';
+// import { useState, useEffect } from 'react';
+import HomeView from 'views/HomeView';
+import MoviesView from 'views/MoviesView';
+import Navigation from './Navigation';
+import MovieDetails from 'views/MovieDetails';
+
 export const App = () => {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+    <>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<HomeView />} />
+        <Route path="/movies" element={<MoviesView />} />
+        <Route path="/movies/:movieId" element={<MovieDetails />} />
+      </Routes>
+    </>
   );
 };
