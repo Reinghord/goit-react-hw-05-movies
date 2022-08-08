@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-// import { useState, useEffect } from 'react';
 import HomeView from 'views/HomeView';
 import MoviesView from 'views/MoviesView';
 import Navigation from './Navigation';
@@ -18,6 +17,7 @@ export const App = () => {
           <Route path="cast" element={<Cast />} />
           <Route path="reviews" element={<Reviews />} />
         </Route>
+        <Route path="*" element={<HomeView />} />
       </Routes>
     </>
   );
