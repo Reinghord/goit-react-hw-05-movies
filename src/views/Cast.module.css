@@ -1,0 +1,9 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+}
+.item {
+  width: calc((100vw - 5 * 15px) / 6);
+  text-align: center;
+}

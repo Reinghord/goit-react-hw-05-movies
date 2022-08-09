@@ -1,4 +1,5 @@
-export async function fetchTitles(searchValue) {
+//Function to fetch trending movies
+export async function fetchTitles() {
   const BASIC_URL = `https://api.themoviedb.org/3`;
   const searchParam = new URLSearchParams({
     api_key: '44d6575d8f8dedfd36c7023de34a30c4',
@@ -15,6 +16,7 @@ export async function fetchTitles(searchValue) {
   }
 }
 
+//Function to fetch searched movies
 export async function fetchMovies(searchQuery) {
   const BASIC_URL = `https://api.themoviedb.org/3`;
   const searchParam = new URLSearchParams({
@@ -32,6 +34,7 @@ export async function fetchMovies(searchQuery) {
   }
 }
 
+//Function to fetch movie details
 export async function fetchMovieDetails(movieId) {
   const BASIC_URL = `https://api.themoviedb.org/3`;
   const searchParam = new URLSearchParams({
@@ -48,6 +51,7 @@ export async function fetchMovieDetails(movieId) {
   }
 }
 
+//Function to fetch movie cast
 export async function fetchMovieCast(movieId) {
   const BASIC_URL = `https://api.themoviedb.org/3`;
   const searchParam = new URLSearchParams({
@@ -64,6 +68,7 @@ export async function fetchMovieCast(movieId) {
   }
 }
 
+//Function to fetch movie reviews
 export async function fetchMovieReviews(movieId) {
   const BASIC_URL = `https://api.themoviedb.org/3`;
   const searchParam = new URLSearchParams({

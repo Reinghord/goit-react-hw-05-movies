@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchMovies } from 'api/tmdb_api';
+import s from './MoviesView.module.css';
 
 function MoviesView() {
   const [value, setValue] = useState('');
@@ -13,17 +14,23 @@ function MoviesView() {
 
   //Method to handle search submit
   //Prevents page reloading
-  //Lifting state up using onSubmit prop
   const onHandleSubmit = async e => {
     e.preventDefault();
-    const result = await fetchMovies(value);
-    setMovies(result);
+    try {
+      if (!value) {
+        throw new Error('Empty string is not allowed!');
+      }
+      const result = await fetchMovies(value.trim(''));
+      setMovies(result);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <>
-      <form onSubmit={onHandleSubmit}>
-        <button type="submit">
+      <form onSubmit={onHandleSubmit} className={s.form}>
+        <button type="submit" className={s.button}>
           <span>Search</span>
         </button>
 
@@ -34,13 +41,16 @@ function MoviesView() {
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
+          className={s.input}
           onChange={onHandleInput}
         />
       </form>
-      <ul>
+      <ul className={s.list}>
         {movies.map(movie => (
-          <li key={movie.id}>
-            <Link to={`${movie.id}`}>{movie.title}</Link>
+          <li key={movie.id} className={s.item}>
+            <Link to={`${movie.id}`} className={s.link}>
+              {movie.title}
+            </Link>
           </li>
         ))}
       </ul>

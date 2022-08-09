@@ -1,0 +1,22 @@
+.link__back {
+  display: inline-block;
+  padding: 10px;
+  /* border: 1px solid black; */
+  background-color: rgb(235, 235, 235);
+  text-decoration: none;
+  border-radius: 10px;
+  color: black;
+}
+.link__back:visited {
+  color: black;
+}
+.link__back:hover {
+  color: tomato;
+}
+.wrapper {
+  display: flex;
+}
+.subwrapper {
+  margin-left: 5px;
+  max-width: 800px;
+}

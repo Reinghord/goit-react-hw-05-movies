@@ -1,0 +1,17 @@
+.list {
+  list-style: circle;
+}
+.link {
+  text-decoration: none;
+  color: grey;
+}
+.link:visited {
+  color: grey;
+}
+.link:hover {
+  color: black;
+}
+.item {
+  margin-bottom: 10px;
+  font-size: 20px;
+}

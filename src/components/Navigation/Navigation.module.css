@@ -8,6 +8,9 @@
   text-decoration: none;
   margin-right: 10px;
 }
+.link:visited {
+  color: inherit;
+}
 .active {
   color: tomato;
   text-decoration: none;
