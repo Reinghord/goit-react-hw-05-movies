@@ -40,7 +40,8 @@ function MovieDetails() {
 
         <div className={s.subwrapper}>
           <h1>
-            {details && details.title} ({details && details.release_date})
+            {details && details.title} (
+            {details && details.release_date.slice(0, 4)})
           </h1>
           <p>Userscore: {details && details.vote_average}</p>
           <h2>Overview</h2>
