@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { fetchTitles } from 'api/tmdb_api';
 import s from './HomeView.module.css';
 
 function HomeView() {
   const [titles, setTitles] = useState([]);
+  const location = useLocation();
 
   //Fetch trending movies
   useEffect(() => {
@@ -23,7 +24,11 @@ function HomeView() {
     <ul className={s.list}>
       {titles.map(title => (
         <li key={title.id} className={s.item}>
-          <Link to={`movies/${title.id}`} className={s.link}>
+          <Link
+            to={`movies/${title.id}`}
+            className={s.link}
+            state={{ from: location }}
+          >
             {title.title}
           </Link>
         </li>

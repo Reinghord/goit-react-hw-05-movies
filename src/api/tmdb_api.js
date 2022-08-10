@@ -27,7 +27,6 @@ export async function fetchMovies(searchQuery) {
     const response = await fetch(`${BASIC_URL}/search/movie?${searchParam}`);
     const parsed = await response.json();
     const titles = parsed.results;
-    console.log(titles);
     return titles;
   } catch (error) {
     throw new Error(console.log(error));

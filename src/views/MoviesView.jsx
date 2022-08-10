@@ -1,15 +1,17 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { fetchMovies } from 'api/tmdb_api';
 import s from './MoviesView.module.css';
 
 function MoviesView() {
-  const [value, setValue] = useState('');
   const [movies, setMovies] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get('name') ?? '';
+  const location = useLocation();
 
-  //Method to store input value in component state
-  const onHandleInput = e => {
-    setValue(e.currentTarget.value);
+  const updateQueryString = name => {
+    const nextParams = name !== '' ? { name } : {};
+    setSearchParams(nextParams);
   };
 
   //Method to handle search submit
@@ -17,13 +19,13 @@ function MoviesView() {
   const onHandleSubmit = async e => {
     e.preventDefault();
     try {
-      if (!value) {
+      if (!searchQuery) {
         throw new Error('Empty string is not allowed!');
       }
-      const result = await fetchMovies(value.trim(''));
+      const result = await fetchMovies(searchQuery);
       setMovies(result);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -37,18 +39,22 @@ function MoviesView() {
         <input
           type="text"
           name="search"
-          value={value}
+          value={searchQuery}
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
           className={s.input}
-          onChange={onHandleInput}
+          onChange={e => updateQueryString(e.target.value)}
         />
       </form>
       <ul className={s.list}>
         {movies.map(movie => (
           <li key={movie.id} className={s.item}>
-            <Link to={`${movie.id}`} className={s.link}>
+            <Link
+              to={`${movie.id}`}
+              state={{ from: location }}
+              className={s.link}
+            >
               {movie.title}
             </Link>
           </li>

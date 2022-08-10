@@ -1,5 +1,11 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { useParams, NavLink, Route, Routes } from 'react-router-dom';
+import {
+  useParams,
+  useLocation,
+  NavLink,
+  Route,
+  Routes,
+} from 'react-router-dom';
 import { fetchMovieDetails } from 'api/tmdb_api';
 import s from './MovieDetails.module.css';
 
@@ -10,6 +16,7 @@ function MovieDetails() {
   const [details, setDetails] = useState();
 
   const params = useParams();
+  const location = useLocation();
 
   //Fetching moview details during mounting
   useEffect(() => {
@@ -26,7 +33,13 @@ function MovieDetails() {
 
   return (
     <div>
-      <NavLink to="/movies" className={s.link__back}>
+      <NavLink
+        to={
+          location.state?.from.pathname + location.state?.from.search ??
+          '/movies'
+        }
+        className={s.link__back}
+      >
         Go back
       </NavLink>
 
