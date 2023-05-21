@@ -9,7 +9,6 @@ function MovieDetails() {
 
   const params = useParams();
   const location = useLocation();
-  console.log(location.state);
   //Fetching moview details during mounting
   useEffect(() => {
     try {
