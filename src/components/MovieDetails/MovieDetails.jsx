@@ -1,23 +1,15 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
-import {
-  useParams,
-  useLocation,
-  NavLink,
-  Route,
-  Routes,
-} from 'react-router-dom';
+import { useState, useEffect, Suspense } from 'react';
+import { useParams, useLocation, NavLink } from 'react-router-dom';
 import { fetchMovieDetails } from 'api/tmdb_api';
 import s from './MovieDetails.module.css';
-
-const Cast = lazy(() => import('./Cast'));
-const Reviews = lazy(() => import('./Reviews'));
+import { Outlet } from 'react-router-dom';
 
 function MovieDetails() {
   const [details, setDetails] = useState();
 
   const params = useParams();
   const location = useLocation();
-
+  console.log(location.state);
   //Fetching moview details during mounting
   useEffect(() => {
     try {
@@ -35,8 +27,9 @@ function MovieDetails() {
     <div>
       <NavLink
         to={
-          location.state?.from.pathname + location.state?.from.search ??
-          '/movies'
+          location.state?.from
+            ? `/${location.state?.from?.pathname}${location.state?.from?.search}`
+            : '/movies'
         }
         className={s.link__back}
       >
@@ -67,20 +60,21 @@ function MovieDetails() {
           <p>Additional information</p>
           <ul>
             <li>
-              <NavLink to="cast">Cast</NavLink>
+              <NavLink to="cast" state={{ from: location.state?.from }}>
+                Cast
+              </NavLink>
             </li>
             <li>
-              <NavLink to="reviews">Reviews</NavLink>
+              <NavLink to="reviews" state={{ from: location.state?.from }}>
+                Reviews
+              </NavLink>
             </li>
           </ul>
         </div>
       </div>
 
       <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path="cast" element={<Cast />} />
-          <Route path="reviews" element={<Reviews />} />
-        </Routes>
+        <Outlet />
       </Suspense>
     </div>
   );

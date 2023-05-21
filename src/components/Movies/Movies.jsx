@@ -11,7 +11,6 @@ function Movies() {
   const location = useLocation();
 
   const updateQueryString = name => {
-    console.log(name);
     const nextParams = name !== '' ? { name } : {};
     setSearchParams(nextParams);
   };
