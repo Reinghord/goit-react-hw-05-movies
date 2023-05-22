@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { fetchMovies } from 'api/tmdb_api';
 import s from './Movies.module.css';
-import { Suspense } from 'react';
 
 function Movies() {
   const [movies, setMovies] = useState([]);
+  const [status, setStatus] = useState('idle');
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get('name') ?? '';
   const location = useLocation();
@@ -18,7 +18,14 @@ function Movies() {
   useEffect(() => {
     async function fetching() {
       const result = await fetchMovies(searchQuery);
+      if (result.length === 0) {
+        return setStatus('rejected');
+      }
       setMovies(result);
+      setStatus('loaded');
+    }
+    if (!searchQuery) {
+      return;
     }
     fetching();
   }, [searchQuery]);
@@ -48,26 +55,23 @@ function Movies() {
           <span>Search</span>
         </button>
       </form>
-      <Suspense fallback={<div>Loading...</div>}>
-        {' '}
-        {searchQuery ? (
-          <ul className={s.list}>
-            {movies.map(movie => (
-              <li key={movie.id} className={s.item}>
-                <Link
-                  to={`${movie.id}`}
-                  state={{ from: location }}
-                  className={s.link}
-                >
-                  {movie.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div>Try to seach something!</div>
-        )}
-      </Suspense>
+      {status === 'idle' && <div>Try to seach something!</div>}
+      {status === 'rejected' && <div>Nothing found, folks!</div>}
+      {status === 'loaded' && (
+        <ul className={s.list}>
+          {movies.map(movie => (
+            <li key={movie.id} className={s.item}>
+              <Link
+                to={`${movie.id}`}
+                state={{ from: location }}
+                className={s.link}
+              >
+                {movie.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }
